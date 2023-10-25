@@ -1,5 +1,4 @@
-* {
-  height: 100vh;
-  width: 85vmax;
-  background-color: beige;
+.container {
+  display: flex;
+  flex-direction: column;
 }

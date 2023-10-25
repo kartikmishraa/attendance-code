@@ -11,6 +11,7 @@ export class DashboardComponent implements OnInit {
   students: Student[] = [];
   errMessage!: string;
   isLoading = true;
+  columnsToDisplay = ['id', 'name', 'email', 'phone'];
 
   constructor(private data_service: DataService) {}
 
