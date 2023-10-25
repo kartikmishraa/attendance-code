@@ -3,16 +3,24 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SidebarComponent } from './layout/sidebar/sidebar.component';
+import { HomeComponent } from './layout/home/home.component';
+import { DashboardComponent } from './features/dashboard/dashboard.component';
+import { AddStudentComponent } from './features/add-student/add-student.component';
+import { MarkAttendanceComponent } from './features/mark-attendance/mark-attendance.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SidebarComponent,
+    HomeComponent,
+    DashboardComponent,
+    AddStudentComponent,
+    MarkAttendanceComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
+  imports: [BrowserModule, AppRoutingModule, BrowserAnimationsModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
