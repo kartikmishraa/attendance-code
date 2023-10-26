@@ -14,6 +14,22 @@
         placeholder="Enter Student Name"
         formControlName="name"
       />
+      <!-- Required Error -->
+      <mat-error
+        *ngIf="
+          addStudentForm.get('name') &&
+          addStudentForm.get('name')?.hasError('required')
+        "
+        >Name is REQUIRED</mat-error
+      >
+      <!-- Spl Characters Error  -->
+      <mat-error
+        *ngIf="
+          addStudentForm.get('name') &&
+          addStudentForm.get('name')?.hasError('pattern')
+        "
+        >Invalid characters in Name</mat-error
+      >
     </mat-form-field>
 
     <!-- EMAIL -->
@@ -25,6 +41,22 @@
         placeholder="Enter Email"
         formControlName="email"
       />
+      <!-- Required Error -->
+      <mat-error
+        *ngIf="
+          addStudentForm.get('email') &&
+          addStudentForm.get('email')?.hasError('required')
+        "
+        >Email is REQUIRED</mat-error
+      >
+      <!-- Email Error -->
+      <mat-error
+        *ngIf="
+          addStudentForm.get('email') &&
+          addStudentForm.get('email')?.hasError('email')
+        "
+        >Invalid Email ID</mat-error
+      >
     </mat-form-field>
 
     <!-- PHONE -->
@@ -35,12 +67,26 @@
         type="text"
         placeholder="Enter Phone Number"
         formControlName="phone"
+        (keydown)="validateNumber($event)"
       />
+      <!-- Required Error -->
+      <mat-error
+        *ngIf="
+          addStudentForm.get('phone') &&
+          addStudentForm.get('phone')?.hasError('required')
+        "
+        >Phone no. is REQUIRED</mat-error
+      >
     </mat-form-field>
 
     <!-- Form Buttons -->
     <div class="flex flex-row center" style="gap: 10px">
-      <button mat-raised-button color="primary" (click)="handleSubmit()">
+      <button
+        [disabled]="addStudentForm.invalid ? 'true' : 'false'"
+        mat-raised-button
+        color="primary"
+        (click)="handleSubmit()"
+      >
         Submit
       </button>
       <button mat-raised-button color="accent" (click)="handleReset()">
