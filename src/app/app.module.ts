@@ -9,7 +9,7 @@ import { HomeComponent } from './layout/home/home.component';
 import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { AddStudentComponent } from './features/add-student/add-student.component';
 import { MarkAttendanceComponent } from './features/mark-attendance/mark-attendance.component';
-import { SharedModule } from './shared/shared.module';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [

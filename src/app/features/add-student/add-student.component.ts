@@ -37,12 +37,13 @@ export class AddStudentComponent {
     if (this.addStudentForm.valid) {
       // Creating object to POST
       let newStudent: Student = {
-        id: 100, // TO CHANGE
+        id: 0, // sending 0, mockAPI will automatically assign since it is PK
         name: String(this.addStudentForm.get('name')!.value),
         email: String(this.addStudentForm.get('email')!.value),
         phone: Number(this.addStudentForm.get('phone')!.value),
       };
-      // this.addStudentForm.getRawValue() check this
+
+      /* @TODO: Add a loading spinner, and then successful or error toast */
       this.data_service.addOneStudent(newStudent).subscribe({
         next: (val) => {
           console.log('form successfully submitted');
@@ -50,6 +51,9 @@ export class AddStudentComponent {
         },
         error: (err) => {
           console.log(err);
+        },
+        complete: () => {
+          // loading finishes (remove spinner)
         },
       });
     } else {
