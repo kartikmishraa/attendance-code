@@ -11,7 +11,7 @@ export class DashboardComponent implements OnInit {
   students: Student[] = [];
   errMessage!: string;
   isLoading = true;
-  columnsToDisplay = ['id', 'name', 'email', 'phone'];
+  columnsToDisplay = ['id', 'name', 'email', 'phone', 'actions']; // CONSTANTS file mei daaldo
 
   constructor(private data_service: DataService) {}
 

@@ -37,12 +37,12 @@ export class AddStudentComponent {
     if (this.addStudentForm.valid) {
       // Creating object to POST
       let newStudent: Student = {
-        id: 100,
+        id: 100, // TO CHANGE
         name: String(this.addStudentForm.get('name')!.value),
         email: String(this.addStudentForm.get('email')!.value),
         phone: Number(this.addStudentForm.get('phone')!.value),
       };
-
+      // this.addStudentForm.getRawValue() check this
       this.data_service.addOneStudent(newStudent).subscribe({
         next: (val) => {
           console.log('form successfully submitted');
