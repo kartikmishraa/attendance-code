@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { DataService } from 'src/app/services/data.service';
+import { Student } from 'src/app/interfaces/student';
 
 @Component({
   selector: 'app-add-student',
@@ -7,7 +9,7 @@ import { FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./add-student.component.scss'],
 })
 export class AddStudentComponent {
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private data_service: DataService) {}
 
   // @TODO: Add PHONE VALIDATION
   /**
@@ -29,12 +31,27 @@ export class AddStudentComponent {
   });
 
   /**
-   * @description: Function that handles form submission
+   * @description: Function to handle form submission and send data to API
    */
   handleSubmit(): void {
     if (this.addStudentForm.valid) {
-      console.log('form submitted');
-      console.log(this.addStudentForm.value);
+      // Creating object to POST
+      let newStudent: Student = {
+        id: 100,
+        name: String(this.addStudentForm.get('name')!.value),
+        email: String(this.addStudentForm.get('email')!.value),
+        phone: Number(this.addStudentForm.get('phone')!.value),
+      };
+
+      this.data_service.addOneStudent(newStudent).subscribe({
+        next: (val) => {
+          console.log('form successfully submitted');
+          console.log(val);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
     } else {
       console.log('invalid form');
     }
