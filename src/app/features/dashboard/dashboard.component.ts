@@ -16,6 +16,9 @@ export class DashboardComponent implements OnInit {
   constructor(private data_service: DataService) {}
 
   ngOnInit(): void {
+    /**
+     * @description: Fetching data
+     */
     this.data_service.getAllStudents().subscribe({
       next: (data) => {
         this.students = data;
