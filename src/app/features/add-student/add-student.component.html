@@ -68,6 +68,7 @@
         placeholder="Enter Phone Number"
         formControlName="phone"
         (keydown)="validateNumber($event)"
+        maxlength="10"
       />
       <!-- Required Error -->
       <mat-error
@@ -76,6 +77,14 @@
           addStudentForm.get('phone')?.hasError('required')
         "
         >Phone no. is REQUIRED</mat-error
+      >
+      <!-- Phone Pattern Error -->
+      <mat-error
+        *ngIf="
+          addStudentForm.get('phone') &&
+          addStudentForm.get('phone')?.hasError('pattern')
+        "
+        >Enter a valid 10 digit phone number</mat-error
       >
     </mat-form-field>
 

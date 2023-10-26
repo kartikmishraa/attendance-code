@@ -22,7 +22,10 @@ export class AddStudentComponent {
       ],
     ],
     email: ['', [Validators.required, Validators.email]],
-    phone: ['', Validators.required],
+    phone: [
+      '',
+      [Validators.required, Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$')],
+    ],
   });
 
   /**
