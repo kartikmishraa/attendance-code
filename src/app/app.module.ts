@@ -10,6 +10,9 @@ import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { AddStudentComponent } from './features/add-student/add-student.component';
 import { MarkAttendanceComponent } from './features/mark-attendance/mark-attendance.component';
 import { SharedModule } from '../shared/shared.module';
+import { MaterialModule } from 'src/material/material.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -25,6 +28,10 @@ import { SharedModule } from '../shared/shared.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     SharedModule,
+    MaterialModule,
+    ReactiveFormsModule,
+    FormsModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

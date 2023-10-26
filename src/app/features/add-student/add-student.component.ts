@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { DataService } from 'src/app/services/data.service';
-import { Student } from 'src/app/interfaces/student';
+import { Student } from 'src/shared/models/interfaces/Student';
 
 @Component({
   selector: 'app-add-student',
