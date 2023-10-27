@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Student } from 'src/shared/models/interfaces/Student';
-import { DataService } from 'src/app/services/data.service';
+import { DataService } from 'src/shared/services/data.service';
 
 @Component({
   selector: 'app-dashboard',

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { DataService } from 'src/app/services/data.service';
+import { DataService } from 'src/shared/services/data.service';
 import { Student } from 'src/shared/models/interfaces/Student';
 
 @Component({

@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { SidebarComponent } from './layout/sidebar/sidebar.component';
+// import { SidebarComponent } from './layout/sidebar/sidebar.component';
 import { HomeComponent } from './layout/home/home.component';
 import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { AddStudentComponent } from './features/add-student/add-student.component';
@@ -17,7 +17,6 @@ import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
-    SidebarComponent,
     HomeComponent,
     DashboardComponent,
     AddStudentComponent,
