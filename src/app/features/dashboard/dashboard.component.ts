@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Student } from 'src/shared/models/interfaces/Student';
 import { DataService } from 'src/shared/services/data.service';
+import { COLUMNS_TO_DISPLAY } from './dashboard.constant';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,7 +12,7 @@ export class DashboardComponent implements OnInit {
   students: Student[] = [];
   errMessage!: string;
   isLoading = true; // Bool for Mat-Spinner
-  columnsToDisplay = ['id', 'name', 'email', 'phone', 'actions']; // CONSTANTS file mei daaldo
+  columnsToDisplay = COLUMNS_TO_DISPLAY;
 
   constructor(private data_service: DataService) {}
 
