@@ -10,27 +10,19 @@ import { COLUMNS_TO_DISPLAY } from './dashboard.constant';
 })
 export class DashboardComponent implements OnInit {
   students: Student[] = [];
-  errMessage!: string;
-  isLoading = true; // Bool for Mat-Spinner
+  isLoading = true;
   columnsToDisplay = COLUMNS_TO_DISPLAY;
 
   constructor(private data_service: DataService) {}
 
   ngOnInit(): void {
-    /**
-     * @description: Fetching data
-     */
-    this.data_service.getAllStudents().subscribe({
+    this.data_service.isLoadingSubject.subscribe((val) => {
+      this.isLoading = val;
+    });
+
+    this.data_service.data$.subscribe({
       next: (data) => {
         this.students = data;
-        console.log(this.students);
-      },
-      error: (err) => {
-        this.errMessage = err;
-        console.log(this.errMessage);
-      },
-      complete: () => {
-        this.isLoading = false;
       },
     });
   }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { DataService } from 'src/shared/services/data.service';
 import { Student } from 'src/shared/models/interfaces/Student';
@@ -8,8 +8,16 @@ import { Student } from 'src/shared/models/interfaces/Student';
   templateUrl: './add-student.component.html',
   styleUrls: ['./add-student.component.scss'],
 })
-export class AddStudentComponent {
+export class AddStudentComponent implements OnInit {
+  isLoading = true;
+
   constructor(private fb: FormBuilder, private data_service: DataService) {}
+
+  ngOnInit(): void {
+    this.data_service.isLoadingSubject.subscribe((val) => {
+      this.isLoading = val;
+    });
+  }
 
   // @TODO: Add PHONE VALIDATION
   /**
@@ -43,19 +51,11 @@ export class AddStudentComponent {
         phone: Number(this.addStudentForm.get('phone')!.value),
       };
 
-      /* @TODO: Add a loading spinner, and then successful or error toast */
-      this.data_service.addOneStudent(newStudent).subscribe({
-        next: (val) => {
-          console.log('form successfully submitted');
-          console.log(val);
-        },
-        error: (err) => {
-          console.log(err);
-        },
-        complete: () => {
-          // loading finishes (remove spinner)
-        },
-      });
+      /* @TODO: Add a SUCCESS or ERROR toast */
+      this.data_service.addOneStudent(newStudent);
+
+      // Reset form after submission
+      this.handleReset();
     } else {
       console.log('invalid form');
     }
