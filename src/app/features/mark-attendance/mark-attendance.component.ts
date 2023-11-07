@@ -27,7 +27,7 @@ export class MarkAttendanceComponent implements OnInit {
   }
 
   markAttendanceForm = this.fb.group({
-    id: [0, Validators.required],
+    roll: ['', Validators.required],
     date: [new Date(), Validators.required],
     status: ['', Validators.required],
   });
@@ -39,7 +39,7 @@ export class MarkAttendanceComponent implements OnInit {
     if (this.markAttendanceForm.valid) {
       const dateValue = this.markAttendanceForm.controls.date!.value;
       let newAttendance: Attendance = {
-        student_id: Number(this.markAttendanceForm.controls.id!.value),
+        student_id: Number(this.markAttendanceForm.controls.roll!.value),
         date: dateValue ? new Date(dateValue) : new Date(),
         status: String(this.markAttendanceForm.controls.status.value),
       };

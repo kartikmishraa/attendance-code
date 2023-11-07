@@ -11,7 +11,7 @@
     <!-- Roll -->
     <mat-form-field>
       <mat-label>Roll No.</mat-label>
-      <mat-select formControlName="id">
+      <mat-select formControlName="roll">
         <mat-option
           *ngFor="let student of students"
           [value]="student.id | number"
@@ -20,6 +20,14 @@
           {{ student.id }} - [ {{ student.name }} ]
         </mat-option>
       </mat-select>
+      <!-- Required Error -->
+      <mat-error
+        *ngIf="
+          markAttendanceForm.get('roll') &&
+          markAttendanceForm.get('roll')?.hasError('required')
+        "
+        >Roll is REQUIRED</mat-error
+      >
     </mat-form-field>
 
     <!-- Date -->
@@ -46,7 +54,16 @@
           {{ status }}
         </mat-option>
       </mat-select>
+      <!-- Required Error -->
+      <mat-error
+        *ngIf="
+          markAttendanceForm.get('status') &&
+          markAttendanceForm.get('status')?.hasError('required')
+        "
+        >Status is REQUIRED</mat-error
+      >
     </mat-form-field>
+
     <button mat-raised-button (click)="handleSubmit()">Submit</button>
   </form>
   <!-- Form ends -->
