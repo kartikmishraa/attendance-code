@@ -37,7 +37,12 @@
           >
             Edit
           </button>
-          <button class="my-button" mat-raised-button color="warn">
+          <button
+            class="my-button"
+            mat-raised-button
+            color="warn"
+            (click)="handleDelete(row.id, row.name)"
+          >
             Delete
           </button>
         </div>

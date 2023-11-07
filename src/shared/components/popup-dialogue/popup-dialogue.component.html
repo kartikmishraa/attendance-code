@@ -1,0 +1,8 @@
+<h2>Deleting student record!</h2>
+<p>Are you sure you want to delete entry for the below student:</p>
+<p>Roll: {{ data.id }}</p>
+<p>Name: {{ data.name }}</p>
+<button mat-raised-button color="warn" (click)="handleDelete(data.id)">
+  Delete
+</button>
+<button mat-raised-button mat-dialog-close>Cancel</button>

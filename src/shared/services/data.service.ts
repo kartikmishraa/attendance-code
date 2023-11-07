@@ -77,11 +77,24 @@ export class DataService {
     );
   }
 
+  /**
+   * @description: Adds a new attendance for a student
+   * @param data: Attendance details to be uploaded
+   */
   markOneAttendance(data: Attendance): void {
     this.isLoadingSubject.next(true);
     this.http.post<Attendance>(ATTENDANCE_ENDPOINT, data).subscribe((val) => {
       this.isLoadingSubject.next(false);
       console.log('Attendance marked');
+    });
+  }
+
+  deleteStudent(id: number): void {
+    this.isLoadingSubject.next(true);
+    this.http.delete(`${STUDENT_ENDPOINT}/${id}`).subscribe(() => {
+      this.updateStudentsData();
+      this.isLoadingSubject.next(false);
+      console.log('item deleted with id: ', id);
     });
   }
 }

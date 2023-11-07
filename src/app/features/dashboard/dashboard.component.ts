@@ -6,6 +6,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { PopupDialogueComponent } from 'src/shared/components/popup-dialogue/popup-dialogue.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -25,10 +27,14 @@ export class DashboardComponent implements OnInit {
   paginatorPageSize = 5;
   paginatorLength = 0;
 
-  constructor(private data_service: DataService, private router: Router) {}
+  constructor(
+    private dataService: DataService,
+    private router: Router,
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
-    this.data_service.isLoadingSubject.subscribe((val) => {
+    this.dataService.isLoadingSubject.subscribe((val) => {
       this.isLoading = val;
     });
 
@@ -37,7 +43,7 @@ export class DashboardComponent implements OnInit {
      *               for student data. Configures the material paginator.
      * @todo: PAGINATOR NOT WORKING!
      */
-    this.data_service.studentData$.subscribe({
+    this.dataService.studentData$.subscribe({
       next: (data) => {
         this.students = data;
 
@@ -69,5 +75,17 @@ export class DashboardComponent implements OnInit {
    */
   handleEdit(id: number): void {
     this.router.navigateByUrl(`edit-student/${id}`);
+  }
+
+  handleDelete(id: number, name: string): void {
+    // @TODO: Open Dialog
+    // this.dialog.open(PopupDialogueComponent);
+    const dialogRef = this.dialog.open(PopupDialogueComponent, {
+      data: { id: id, name: name },
+    });
+
+    // dialogRef.afterClosed().subscribe((result) => {
+    //   console.log('The dialog was closed');
+    // });
   }
 }
