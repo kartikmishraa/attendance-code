@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Student } from 'src/shared/models/interfaces/Student';
 import { DataService } from 'src/shared/services/data.service';
 import { COLUMNS_TO_DISPLAY } from './dashboard.constant';
@@ -14,7 +14,7 @@ import { DeleteDialogueComponent } from 'src/shared/components/delete-dialogue/d
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, AfterViewInit {
   students: Student[] = [];
   isLoading = true;
 
@@ -47,13 +47,17 @@ export class DashboardComponent implements OnInit {
       next: (data) => {
         this.students = data;
 
-        // Paginator stuff
+        // MatTable Config
         this.paginatorLength = this.students.length;
         this.dataSource = new MatTableDataSource(this.students);
-        this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
       },
     });
+  }
+
+  ngAfterViewInit(): void {
+    // MatPaginator Config
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
 
   /**
