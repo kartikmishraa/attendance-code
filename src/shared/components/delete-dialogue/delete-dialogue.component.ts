@@ -4,14 +4,14 @@ import { DialogueData } from 'src/shared/models/interfaces/DialogueData';
 import { DataService } from 'src/shared/services/data.service';
 
 @Component({
-  selector: 'app-popup-dialogue',
-  templateUrl: './popup-dialogue.component.html',
-  styleUrls: ['./popup-dialogue.component.scss'],
+  selector: 'app-delete-dialogue',
+  templateUrl: './delete-dialogue.component.html',
+  styleUrls: ['./delete-dialogue.component.scss'],
 })
-export class PopupDialogueComponent {
+export class DeleteDialogueComponent {
   constructor(
     private dataService: DataService,
-    public dialogRef: MatDialogRef<PopupDialogueComponent>,
+    public dialogRef: MatDialogRef<DeleteDialogueComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogueData
   ) {}
 

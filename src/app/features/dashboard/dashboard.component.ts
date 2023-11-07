@@ -7,7 +7,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { PopupDialogueComponent } from 'src/shared/components/popup-dialogue/popup-dialogue.component';
+import { DeleteDialogueComponent } from 'src/shared/components/delete-dialogue/delete-dialogue.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -77,15 +77,14 @@ export class DashboardComponent implements OnInit {
     this.router.navigateByUrl(`edit-student/${id}`);
   }
 
-  handleDelete(id: number, name: string): void {
-    // @TODO: Open Dialog
-    // this.dialog.open(PopupDialogueComponent);
-    const dialogRef = this.dialog.open(PopupDialogueComponent, {
+  /**
+   * @description Opens delete confirmation dialogue
+   * @param id Student ID of the student to be deleted
+   * @param name Name of the student to be deleted
+   */
+  openDeleteDialogue(id: number, name: string): void {
+    this.dialog.open(DeleteDialogueComponent, {
       data: { id: id, name: name },
     });
-
-    // dialogRef.afterClosed().subscribe((result) => {
-    //   console.log('The dialog was closed');
-    // });
   }
 }
