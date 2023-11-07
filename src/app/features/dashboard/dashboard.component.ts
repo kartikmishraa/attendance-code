@@ -8,6 +8,7 @@ import { MatSort } from '@angular/material/sort';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteDialogueComponent } from 'src/shared/components/delete-dialogue/delete-dialogue.component';
+import { AttendanceDialogueComponent } from 'src/shared/components/attendance-dialogue/attendance-dialogue.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -90,5 +91,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.dialog.open(DeleteDialogueComponent, {
       data: { id: id, name: name },
     });
+  }
+
+  openAttendanceDialogue(id: number): void {
+    this.dialog.open(AttendanceDialogueComponent, { data: { id: id } });
   }
 }

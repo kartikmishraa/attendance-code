@@ -28,7 +28,13 @@
       <th mat-header-cell *matHeaderCellDef>Actions</th>
       <td mat-cell *matCellDef="let row">
         <div class="flex row" style="gap: 10px">
-          <button class="my-button" mat-raised-button>View Attendance</button>
+          <button
+            class="my-button"
+            mat-raised-button
+            (click)="openAttendanceDialogue(row.id)"
+          >
+            View Attendance
+          </button>
           <button
             class="my-button"
             mat-raised-button
