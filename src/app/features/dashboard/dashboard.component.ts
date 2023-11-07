@@ -1,7 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Student } from 'src/shared/models/interfaces/Student';
 import { DataService } from 'src/shared/services/data.service';
 import { COLUMNS_TO_DISPLAY } from './dashboard.constant';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,19 +15,59 @@ import { COLUMNS_TO_DISPLAY } from './dashboard.constant';
 export class DashboardComponent implements OnInit {
   students: Student[] = [];
   isLoading = true;
-  columnsToDisplay = COLUMNS_TO_DISPLAY;
 
-  constructor(private data_service: DataService) {}
+  // Table & Paginator Config -- Put in another file? Constant?
+  @ViewChild('paginator') paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+  dataSource!: MatTableDataSource<Student>;
+  columnsToDisplay = COLUMNS_TO_DISPLAY;
+  paginatorPageSizeOptions = [5, 10];
+  paginatorPageSize = 5;
+  paginatorLength = 0;
+
+  constructor(private data_service: DataService, private router: Router) {}
 
   ngOnInit(): void {
     this.data_service.isLoadingSubject.subscribe((val) => {
       this.isLoading = val;
     });
 
-    this.data_service.data$.subscribe({
+    /**
+     * @description: Subscribes to the studentData$ observable and updates the UI
+     *               for student data. Configures the material paginator.
+     * @todo: PAGINATOR NOT WORKING!
+     */
+    this.data_service.studentData$.subscribe({
       next: (data) => {
         this.students = data;
+
+        // Paginator stuff
+        this.paginatorLength = this.students.length;
+        this.dataSource = new MatTableDataSource(this.students);
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
       },
     });
+  }
+
+  /**
+   * @description: Filters the data source based on user input and resets the paginator.
+   * @param event: Keyboard input
+   */
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  /**
+   * @description: Navigates to the edit page for the specified student ID.
+   * @param id: Student ID to navigate to.
+   */
+  handleEdit(id: number): void {
+    this.router.navigateByUrl(`edit-student/${id}`);
   }
 }

@@ -13,6 +13,7 @@ import { SharedModule } from '../shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from 'src/material/material.module';
+import { EditStudentComponent } from './features/edit-student/edit-student.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { MaterialModule } from 'src/material/material.module';
     DashboardComponent,
     AddStudentComponent,
     MarkAttendanceComponent,
+    EditStudentComponent,
   ],
   imports: [
     BrowserModule,

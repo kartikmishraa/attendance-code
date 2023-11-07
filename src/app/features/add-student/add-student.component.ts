@@ -19,7 +19,6 @@ export class AddStudentComponent implements OnInit {
     });
   }
 
-  // @TODO: Add PHONE VALIDATION
   /**
    * @description: FormGroup for controlling the form
    */

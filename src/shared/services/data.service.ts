@@ -1,8 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 import { Student } from 'src/shared/models/interfaces/Student';
-import { STUDENT_ENDPOINT } from '../constants/api.constant';
+import {
+  ATTENDANCE_ENDPOINT,
+  STUDENT_ENDPOINT,
+} from '../constants/api.constant';
+import { Attendance } from '../models/interfaces/Attendance';
 
 @Injectable({
   providedIn: 'root',
@@ -12,32 +16,41 @@ export class DataService {
 
   public isLoadingSubject = new BehaviorSubject<boolean>(true);
   private studentsSubject = new BehaviorSubject<Student[]>([]);
-  public data$: Observable<Student[]> = this.studentsSubject.asObservable();
+  public studentData$: Observable<Student[]> =
+    this.studentsSubject.asObservable();
 
-  newStudent!: Student;
+  newStudent!: Student; // validate its necessity
 
+  /**
+   * @description: Fetches list of students and notifies subscribers on load.
+   */
   intitalFetch(): void {
-    console.log('Initial fetch called');
     this.isLoadingSubject.next(true);
-    this.http.get<Student[]>(STUDENT_ENDPOINT).subscribe((val) => {
-      this.studentsSubject.next(val);
-      this.isLoadingSubject.next(false);
-    });
-  }
 
-  updateStudentsData(): void {
-    this.isLoadingSubject.next(true);
     this.http.get<Student[]>(STUDENT_ENDPOINT).subscribe((val) => {
       this.studentsSubject.next(val);
       this.isLoadingSubject.next(false);
     });
-    console.log('updated student details');
   }
 
   /**
-   * @description POST /api/student
-   * @param data: Student data to be be uplaoded
-   * @returns Student Data that was uploaded
+   * @description: Updates the list of students and notifies subscribers.
+   */
+  updateStudentsData(): void {
+    this.isLoadingSubject.next(true);
+
+    this.http.get<Student[]>(STUDENT_ENDPOINT).subscribe((val) => {
+      this.studentsSubject.next(val);
+      this.isLoadingSubject.next(false);
+    });
+
+    console.log('updated student details'); // for debug
+  }
+
+  /**
+   * @description: Adds a new student and returns the added student.
+   * @param data: Student object to be be uplaoded
+   * @returns Student object that was uploaded
    */
   addOneStudent(data: Student): Student {
     this.isLoadingSubject.next(true);
@@ -46,6 +59,29 @@ export class DataService {
       this.updateStudentsData();
     });
 
-    return this.newStudent;
+    return this.newStudent; // what to do with this?
+  }
+
+  /**
+   * @description: Returns a student Observable based on ID.
+   * @param id: Student ID to find and return the student
+   * @returns: Student object as an observable
+   */
+  getOneStudent(id: number): Observable<Student> {
+    return this.studentData$.pipe(
+      map((students) => {
+        const student = students.find((student) => student.id === id);
+        if (student) return student;
+        else throw new Error('Student not found');
+      })
+    );
+  }
+
+  markOneAttendance(data: Attendance): void {
+    this.isLoadingSubject.next(true);
+    this.http.post<Attendance>(ATTENDANCE_ENDPOINT, data).subscribe((val) => {
+      this.isLoadingSubject.next(false);
+      console.log('Attendance marked');
+    });
   }
 }
