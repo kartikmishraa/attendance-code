@@ -7,12 +7,13 @@ import {
   STUDENT_ENDPOINT,
 } from '../constants/api.constant';
 import { Attendance } from '../models/interfaces/Attendance';
+import { ToastService } from './toast.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private toaster: ToastService) {}
 
   public isLoadingSubject = new BehaviorSubject<boolean>(true);
   private studentsSubject = new BehaviorSubject<Student[]>([]);
@@ -58,11 +59,8 @@ export class DataService {
    * @description Updates the Attendance records and notifies subscribers.
    */
   updateAttendanceData(): void {
-    this.isLoadingSubject.next(true);
-
     this.http.get<Attendance[]>(ATTENDANCE_ENDPOINT).subscribe((val) => {
       this.attendanceSubject.next(val);
-      this.isLoadingSubject.next(false);
     });
   }
 
@@ -76,6 +74,8 @@ export class DataService {
     this.http.post<Student>(STUDENT_ENDPOINT, data).subscribe((val) => {
       this.newStudent = val;
       this.updateStudentsData();
+      this.isLoadingSubject.next(false);
+      this.toaster.makeToast(`${this.newStudent.name} successfully added!`);
     });
 
     return this.newStudent; // what to do with this?
@@ -104,6 +104,8 @@ export class DataService {
     this.isLoadingSubject.next(true);
     this.http.post<Attendance>(ATTENDANCE_ENDPOINT, data).subscribe((val) => {
       this.updateAttendanceData();
+      this.isLoadingSubject.next(false);
+      this.toaster.makeToast(`Roll: ${data.student_id} marked ${data.status}`);
     });
   }
 
@@ -116,6 +118,7 @@ export class DataService {
     this.http.delete(`${STUDENT_ENDPOINT}/${id}`).subscribe(() => {
       this.updateStudentsData();
       this.isLoadingSubject.next(false);
+      this.toaster.makeToast(`Roll: ${id} deleted from records!`);
     });
   }
 

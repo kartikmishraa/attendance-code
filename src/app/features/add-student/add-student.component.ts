@@ -52,7 +52,6 @@ export class AddStudentComponent implements OnInit {
 
       /* @TODO: Add a SUCCESS or ERROR toast */
       this.data_service.addOneStudent(newStudent);
-
       // Reset form after submission
       this.handleReset();
     } else {
