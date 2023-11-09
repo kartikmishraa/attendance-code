@@ -23,9 +23,7 @@ export class EditStudentComponent implements OnInit {
     this.studentId = route.snapshot.params['id'];
   }
 
-  /**
-   * @description: FormGroup for controlling the form
-   */
+  // Form Group for Edit Student form
   editStudentForm = this.fb.group({
     name: [
       '',

@@ -21,3 +21,7 @@ export class NumberOnlyDirective {
     }
   }
 }
+
+/**
+ * @description This custom directive allows only numbers to be read in Phone Number input fields
+ */

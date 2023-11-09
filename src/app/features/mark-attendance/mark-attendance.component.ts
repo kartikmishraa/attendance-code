@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Attendance } from 'src/shared/models/interfaces/Attendance';
 import { Student } from 'src/shared/models/interfaces/Student';
 import { DataService } from 'src/shared/services/data.service';
+import { STATUS_OPTIONS } from '../../constants/mark-attendance.constant';
 
 @Component({
   selector: 'app-mark-attendance',
@@ -12,8 +13,15 @@ import { DataService } from 'src/shared/services/data.service';
 export class MarkAttendanceComponent implements OnInit {
   students: Student[] = [];
   isLoading = true;
+  statusOptions = STATUS_OPTIONS;
 
-  statusOptions = ['Present', 'Absent'];
+  // Form Group for Mark Attendance form
+  markAttendanceForm = this.fb.group({
+    roll: ['', Validators.required],
+    date: [new Date(), Validators.required],
+    status: ['', Validators.required],
+  });
+
   constructor(private dataService: DataService, private fb: FormBuilder) {}
 
   ngOnInit(): void {
@@ -26,14 +34,8 @@ export class MarkAttendanceComponent implements OnInit {
     });
   }
 
-  markAttendanceForm = this.fb.group({
-    roll: ['', Validators.required],
-    date: [new Date(), Validators.required],
-    status: ['', Validators.required],
-  });
-
   /**
-   * @description:
+   * @description Handles form submission, marks attendance for the student
    */
   handleSubmit(): void {
     if (this.markAttendanceForm.valid) {
@@ -45,6 +47,7 @@ export class MarkAttendanceComponent implements OnInit {
       };
 
       this.dataService.markOneAttendance(newAttendance);
+      this.markAttendanceForm.reset();
     } else {
       console.log('form invalid');
     }

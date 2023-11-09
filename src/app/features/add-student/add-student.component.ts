@@ -11,17 +11,7 @@ import { Student } from 'src/shared/models/interfaces/Student';
 export class AddStudentComponent implements OnInit {
   isLoading = true;
 
-  constructor(private fb: FormBuilder, private data_service: DataService) {}
-
-  ngOnInit(): void {
-    this.data_service.isLoadingSubject.subscribe((val) => {
-      this.isLoading = val;
-    });
-  }
-
-  /**
-   * @description: FormGroup for controlling the form
-   */
+  // Form Group for Add Student form
   addStudentForm = this.fb.group({
     name: [
       '',
@@ -36,6 +26,14 @@ export class AddStudentComponent implements OnInit {
       [Validators.required, Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$')],
     ],
   });
+
+  constructor(private fb: FormBuilder, private data_service: DataService) {}
+
+  ngOnInit(): void {
+    this.data_service.isLoadingSubject.subscribe((val) => {
+      this.isLoading = val;
+    });
+  }
 
   /**
    * @description: Function to handle form submission and send data to API

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Student } from 'src/shared/models/interfaces/Student';
 import { DataService } from 'src/shared/services/data.service';
-import { COLUMNS_TO_DISPLAY } from './dashboard.constant';
+import { COLUMNS_TO_DISPLAY } from '../../constants/dashboard.constant';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -62,6 +62,27 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
   /**
+   * @description Opens delete confirmation dialogue
+   * @param id Student ID of the student to be deleted
+   * @param name Name of the student to be deleted
+   */
+  openDeleteDialogue(id: number, name: string): void {
+    this.dialog.open(DeleteDialogueComponent, {
+      data: { id: id, name: name },
+    });
+  }
+
+  /**
+   * @description Opens the attendance dialogue
+   * @param id Student ID
+   */
+  openAttendanceDialogue(id: number, name: string): void {
+    this.dialog.open(AttendanceDialogueComponent, {
+      data: { id: id, name: name },
+    });
+  }
+
+  /**
    * @description: Filters the data source based on user input and resets the paginator.
    * @param event: Keyboard input
    */
@@ -80,20 +101,5 @@ export class DashboardComponent implements OnInit, AfterViewInit {
    */
   handleEdit(id: number): void {
     this.router.redirectToUrl(`edit-student/${id}`);
-  }
-
-  /**
-   * @description Opens delete confirmation dialogue
-   * @param id Student ID of the student to be deleted
-   * @param name Name of the student to be deleted
-   */
-  openDeleteDialogue(id: number, name: string): void {
-    this.dialog.open(DeleteDialogueComponent, {
-      data: { id: id, name: name },
-    });
-  }
-
-  openAttendanceDialogue(id: number): void {
-    this.dialog.open(AttendanceDialogueComponent, { data: { id: id } });
   }
 }
