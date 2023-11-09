@@ -1,4 +1,101 @@
-<p>edit-student works!</p>
-<h1>Student ID: {{ studentId }}</h1>
-<h3>Student Name: {{ student.name }}</h3>
-<!-- <p>Student Email: {{ student.email }}</p> -->
+<div class="container flex flex-column">
+  <h1 style="text-align: center; font-weight: 700">Edit Student Details</h1>
+  <form [formGroup]="editStudentForm" class="flex flex-column">
+    <!-- Name -->
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input
+        type="text"
+        matInput
+        formControlName="name"
+        placeholder="{{ student.name }}"
+      />
+      <!-- Required Error -->
+      <mat-error
+        *ngIf="
+          editStudentForm.get('name') &&
+          editStudentForm.get('name')?.hasError('required')
+        "
+        >Name is REQUIRED</mat-error
+      >
+      <!-- Spl Characters Error  -->
+      <mat-error
+        *ngIf="
+          editStudentForm.get('name') &&
+          editStudentForm.get('name')?.hasError('pattern')
+        "
+        >Invalid characters in Name</mat-error
+      >
+    </mat-form-field>
+
+    <!-- Email -->
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input
+        type="email"
+        matInput
+        formControlName="email"
+        placeholder="{{ student.email }}"
+      />
+      <!-- Required Error -->
+      <mat-error
+        *ngIf="
+          editStudentForm.get('email') &&
+          editStudentForm.get('email')?.hasError('required')
+        "
+        >Email is REQUIRED</mat-error
+      >
+      <!-- Email Error -->
+      <mat-error
+        *ngIf="
+          editStudentForm.get('email') &&
+          editStudentForm.get('email')?.hasError('email')
+        "
+        >Invalid Email ID</mat-error
+      >
+    </mat-form-field>
+
+    <!-- Phone -->
+    <mat-form-field>
+      <mat-label>Phone No.</mat-label>
+      <input
+        matInput
+        type="text"
+        formControlName="phone"
+        maxlength="10"
+        (keydown)="validateNumber($event)"
+      />
+      <!-- Required Error -->
+      <mat-error
+        *ngIf="
+          editStudentForm.get('phone') &&
+          editStudentForm.get('phone')?.hasError('required')
+        "
+        >Phone no. is REQUIRED</mat-error
+      >
+      <!-- Phone Pattern Error -->
+      <mat-error
+        *ngIf="
+          editStudentForm.get('phone') &&
+          editStudentForm.get('phone')?.hasError('pattern')
+        "
+        >Enter a valid 10 digit phone number</mat-error
+      >
+    </mat-form-field>
+
+    <!-- Form Buttons -->
+    <div class="flex flex-row center" style="gap: 10px">
+      <button
+        [disabled]="editStudentForm.invalid ? 'true' : 'false'"
+        mat-raised-button
+        color="primary"
+        (click)="handleSubmit()"
+      >
+        Submit
+      </button>
+      <button mat-raised-button color="accent" (click)="goBack()">
+        Go Back
+      </button>
+    </div>
+  </form>
+</div>

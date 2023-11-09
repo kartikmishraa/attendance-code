@@ -8,17 +8,27 @@ import {
 } from '../constants/api.constant';
 import { Attendance } from '../models/interfaces/Attendance';
 import { ToastService } from './toast.service';
+import { RouterService } from './router.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DataService {
-  constructor(private http: HttpClient, private toaster: ToastService) {}
+  constructor(
+    private http: HttpClient,
+    private toaster: ToastService,
+    private router: RouterService
+  ) {}
 
+  // For conditionally rendering MatSpinner
   public isLoadingSubject = new BehaviorSubject<boolean>(true);
+
+  // For storing Student data
   private studentsSubject = new BehaviorSubject<Student[]>([]);
   public studentData$: Observable<Student[]> =
     this.studentsSubject.asObservable();
+
+  // For storing Attendance data
   private attendanceSubject = new BehaviorSubject<Attendance[]>([]);
   public attendanceData$: Observable<Attendance[]> =
     this.attendanceSubject.asObservable();
@@ -51,8 +61,6 @@ export class DataService {
       this.studentsSubject.next(val);
       this.isLoadingSubject.next(false);
     });
-
-    console.log('updated student details'); // for debug
   }
 
   /**
@@ -137,5 +145,18 @@ export class DataService {
         else throw new Error('Attendance not found');
       })
     );
+  }
+
+  /**
+   * @description Updates Student record
+   * @param id STUDENT ID
+   * @param data Updated Data to be sent
+   */
+  updateStudentById(id: number, data: Student): void {
+    this.http.put(`${STUDENT_ENDPOINT}/${id}`, data).subscribe((val) => {
+      this.updateStudentsData();
+      this.toaster.makeToast(`Roll: ${id} successfully updated!`);
+      this.router.redirectToUrl('/dashboard');
+    });
   }
 }

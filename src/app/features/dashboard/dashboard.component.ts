@@ -5,10 +5,10 @@ import { COLUMNS_TO_DISPLAY } from './dashboard.constant';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteDialogueComponent } from 'src/shared/components/delete-dialogue/delete-dialogue.component';
 import { AttendanceDialogueComponent } from 'src/shared/components/attendance-dialogue/attendance-dialogue.component';
+import { RouterService } from 'src/shared/services/router.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -30,7 +30,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   constructor(
     private dataService: DataService,
-    private router: Router,
+    private router: RouterService,
     public dialog: MatDialog
   ) {}
 
@@ -79,7 +79,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
    * @param id: Student ID to navigate to.
    */
   handleEdit(id: number): void {
-    this.router.navigateByUrl(`edit-student/${id}`);
+    this.router.redirectToUrl(`edit-student/${id}`);
   }
 
   /**
