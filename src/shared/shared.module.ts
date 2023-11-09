@@ -4,18 +4,21 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { DeleteDialogueComponent } from './components/delete-dialogue/delete-dialogue.component';
 import { MaterialModule } from 'src/material/material.module';
 import { AttendanceDialogueComponent } from './components/attendance-dialogue/attendance-dialogue.component';
+import { NumberOnlyDirective } from './directives/number-only.directive';
 
 @NgModule({
   declarations: [
     SidebarComponent,
     DeleteDialogueComponent,
     AttendanceDialogueComponent,
+    NumberOnlyDirective,
   ],
   imports: [CommonModule, MaterialModule],
   exports: [
     SidebarComponent,
     DeleteDialogueComponent,
     AttendanceDialogueComponent,
+    NumberOnlyDirective,
   ],
 })
 export class SharedModule {}

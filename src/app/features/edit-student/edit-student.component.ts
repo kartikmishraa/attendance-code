@@ -56,6 +56,9 @@ export class EditStudentComponent implements OnInit {
     });
   }
 
+  /**
+   * @description Handles form submission, updates Student data
+   */
   handleSubmit(): void {
     if (this.editStudentForm.valid) {
       // console.log(this.editStudentForm.value);
@@ -74,24 +77,5 @@ export class EditStudentComponent implements OnInit {
    */
   goBack(): void {
     this.router.redirectToUrl('/dashboard');
-  }
-
-  /**
-   * @description: Helper function to allow only number input in phone input field
-   * @param event Keydown event object
-   */
-  validateNumber(event: KeyboardEvent) {
-    const keyCode = event.keyCode;
-    const excludedKeys = [8, 37, 39, 46];
-
-    if (
-      !(
-        (keyCode >= 48 && keyCode <= 57) ||
-        (keyCode >= 96 && keyCode <= 105) ||
-        excludedKeys.includes(keyCode)
-      )
-    ) {
-      event.preventDefault();
-    }
   }
 }

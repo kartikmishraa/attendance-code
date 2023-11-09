@@ -71,7 +71,7 @@
         type="text"
         placeholder="Enter Phone Number"
         formControlName="phone"
-        (keydown)="validateNumber($event)"
+        appNumberOnly
         maxlength="10"
       />
       <!-- Required Error -->

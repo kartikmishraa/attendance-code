@@ -65,23 +65,4 @@ export class AddStudentComponent implements OnInit {
   handleReset(): void {
     this.addStudentForm.reset();
   }
-
-  /**
-   * @description: Helper function to allow only number input in phone input field
-   * @param event Keydown event object
-   */
-  validateNumber(event: KeyboardEvent) {
-    const keyCode = event.keyCode;
-    const excludedKeys = [8, 37, 39, 46];
-
-    if (
-      !(
-        (keyCode >= 48 && keyCode <= 57) ||
-        (keyCode >= 96 && keyCode <= 105) ||
-        excludedKeys.includes(keyCode)
-      )
-    ) {
-      event.preventDefault();
-    }
-  }
 }

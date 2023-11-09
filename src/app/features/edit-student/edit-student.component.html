@@ -63,7 +63,7 @@
         type="text"
         formControlName="phone"
         maxlength="10"
-        (keydown)="validateNumber($event)"
+        appNumberOnly
       />
       <!-- Required Error -->
       <mat-error
